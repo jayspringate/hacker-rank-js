@@ -1,3 +1,5 @@
+var BinarySearchTree = require('./BinarySearchTree.js');
+
 //preorder traversal -- BARES LEFT, then right once to its sibling, then right and up as high as it can go 
 
 var url = "https://www.hackerrank.com/challenges/tree-preorder-traversal/problem";
@@ -5,57 +7,21 @@ var url = "https://www.hackerrank.com/challenges/tree-preorder-traversal/problem
 var test1 = "6\n1 2 5 3 6 4";
 var test2 = "15\n1 14 3 7 4 5 15 6 13 10 11 2 12 8 9";
 
-function BinarySearchTree () {
+BinarySearchTree.prototype.preOrderTraverse = function(callback) {
+	//in context, "this" refers to BinarySearchTree
+	preOrderTraverseNode(this.getRootNode(), function(nodeKey){
+		console.log(nodeKey);
+	});
+	console.log('I am done with the traversal');
+};
 
-	var Node = function(key) {
-		this.key = key;
-		this.left = null;
-		this.right = null;
-	};
-
-	var root = null;
-
-	this.insert = function(key) {
-		var newNode = new Node(key);
-		if (root === null) {
-			root = newNode;
-		} else {
-			insertNode(root, newNode);
-		}
+var preOrderTraverseNode = function (node, callback) {
+	// console.log('preOrderTraverse called for ' + (node ? node.key : 'null node'));
+	if (node !== null) {
+		callback(node.key);
+		preOrderTraverseNode(node.left, callback);
+		preOrderTraverseNode(node.right, callback);
 	}
-
-	var insertNode = function (node, newNode) {
-		if (newNode.key < node.key) {
-			if (node.left === null) {
-				node.left = newNode;
-			} else {
-				insertNode(node.left, newNode);
-			}
-		} else {
-			if (node.right === null) {
-				node.right = newNode;
-			} else {
-				insertNode(node.right, newNode);
-			}
-		}
-	};
-
-	this.preOrderTraverse = function(callback) {
-		preOrderTraverseNode(root, function(nodeKey){
-			console.log(nodeKey);
-		});
-		console.log('I am done with the traversal');
-	};
-
-	var preOrderTraverseNode = function (node, callback) {
-		// console.log('preOrderTraverse called for ' + (node ? node.key : 'null node'));
-		if (node !== null) {
-			callback(node.key);
-			preOrderTraverseNode(node.left, callback);
-			preOrderTraverseNode(node.right, callback);
-		}
-	}
-
 }
 
 // 1 2 5 3 4 6

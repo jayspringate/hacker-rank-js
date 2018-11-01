@@ -10,6 +10,10 @@ function BinarySearchTree () {
 
 	var root = null;
 
+	this.getRootNode = function () {
+		return root;
+	}
+
 	this.insert = function(key) {
 		var newNode = new Node(key);
 		if (root === null) {
